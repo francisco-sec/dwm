@@ -1,0 +1,10 @@
+# ~/.xinitrc
+while true; 
+do
+    xsetroot -name "$( date +"%F %I:%M %p" )" # or use https://tools.suckless.org/slstatus/
+    sleep 10
+done &
+wmname LG3D
+# Use this to run guest additions on startup, remove # if necessary
+#/usr/bin/VBoxClient --clipboard
+exec dwm

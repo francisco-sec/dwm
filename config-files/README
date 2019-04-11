@@ -1,0 +1,70 @@
+#Install suckless tools
+sudo apt-get install suckless-tools
+
+#Download dwm source code
+wget dl.suckless.org/dwm/dwm-X.X.tar.gz
+
+#Extract tar
+tar -xvf dwm-X.X.tar.gz
+
+# Go to dwm source dir
+cd dwm-X-X
+
+# Change the next line on config.mk
+INCS = -I${X11INC} -I${FREETYPEINC} -I/usr/include/freetype2
+
+# Required packages
+sudo apt-get install libx11-dev
+sudo apt-get install libxft-dev
+sudo apt-get install libxinerama-dev
+
+# Compile and install
+sudo make install
+
+#Edit /usr/share/xsessions/dwm.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Name=dwm
+Comment=Run dwm
+Exec=/etc/X11/Xsession
+Type=Application
+
+# Edit ~/.xinitrc
+while true; 
+do
+    xsetroot -name "$( date +"%F %I:%M %p" )" # or use https://tools.suckless.org/slstatus/
+    sleep 10
+done &
+wmname LG3D
+# Use this to run guest additions on startup, remove # if necessary
+#/usr/bin/VBoxClient --clipboard
+exec dwm
+
+#If kali does not come with startx
+sudo apt-get install xorg
+
+# Steps to boot in command line permanently
+# Change /etc/default/grub
+sudo vi /etc/default/grub
+
+#Change the next lines
+GRUB_CMDLINE_LINUX="text"
+GRUB_TERMINAL=console
+
+#re-generate a GRUB2 config file in /boot
+sudo update-grub
+# Do this step for recent distributions
+sudo systemctl set-default multi-user.target
+
+# Then reboot, login with your account, type startx and enjoy! ;)
+
+# Update dmenu
+wget http://dl.suckless.org/tools/dmenu-4.6.tar.gz
+tar -xvf dmenu-4.6.tar.gz
+cd dmenu-4.6.tar.gz
+
+# Change the next line on config.mk
+INCS = -I${X11INC} -I${FREETYPEINC} -I/usr/include/freetype2
+
+sudo make install
+
